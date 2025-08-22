@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import './_app.css'
+import '../../src/styles/global.css'
 import Head from 'next/head';
 import Image from "next/image";
 import {

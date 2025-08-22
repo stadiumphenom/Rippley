@@ -1,0 +1,101 @@
+/* === IMMERSIVE ANIMATED EFFECTS FOR RIPLEY UI === */
+
+/* Background: Diagonal Scanlines Animation */
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      130deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 2px,
+      transparent 4px,
+      transparent 24px
+    );
+  opacity: 0.85;
+  animation: scanlines-move 8s linear infinite;
+}
+@keyframes scanlines-move {
+  to { background-position: 120px 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
+
+/* (Optional) Animated Glowing Grid Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,209,255,0.04) 1px, transparent 40px),
+    repeating-linear-gradient(90deg, rgba(255,78,221,0.04) 1px, transparent 40px);
+  opacity: 0.6;
+  animation: grid-pan 32s linear infinite;
+}
+@keyframes grid-pan {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 80px 80px, 80px 80px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+}
+
+/* Layering root content above overlays */
+.app {
+  position: relative;
+  z-index: 2;
+}
+
+/* Agent Panel Hover Neon Glow */
+.agent_box {
+  /* existing styles... */
+  transition: box-shadow 0.3s, border-color 0.3s;
+  box-shadow: 0 0 24px 2px #FF4EDD66, 0 0 0 0 #00D1FF00, 0 0 0 0 #FF8A3D00;
+}
+.agent_box:hover {
+  animation: agent-glow-cycle 1.6s linear infinite;
+  border-color: #00D1FF;
+}
+@keyframes agent-glow-cycle {
+  0% { box-shadow: 0 0 24px 2px #FF4EDD66; border-color: #00D1FF; }
+  33% { box-shadow: 0 0 32px 8px #00D1FFCC; border-color: #00D1FF; }
+  66% { box-shadow: 0 0 32px 8px #FF8A3DCC; border-color: #FF8A3D; }
+  100% { box-shadow: 0 0 24px 2px #FF4EDD66; border-color: #FF4EDD; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .agent_box:hover { animation: none; }
+}
+
+/* Terminal Log: Blinking Cursor & Fade-in Lines */
+.log-line {
+  opacity: 0;
+  animation: log-line-fadein 0.7s ease-in forwards;
+}
+.history_box.log-animated {
+  opacity: 0;
+  animation: log-line-fadein 0.7s ease-in forwards;
+}
+@keyframes log-line-fadein {
+  from { opacity: 0; transform: translateY(8px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+.log-cursor {
+  display: inline-block;
+  width: 0.7em;
+  background: none;
+  color: #00D1FF;
+  animation: log-cursor-blink 1.05s steps(1) infinite;
+}
+@keyframes log-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .log-line, .history_box.log-animated, .log-cursor { animation: none !important; opacity: 1 !important; }
+}
