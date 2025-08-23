@@ -5,7 +5,7 @@ import uvicorn
 import os
 
 app = FastAPI()
-templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "..", "templates"))
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
