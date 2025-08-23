@@ -1,0 +1,13 @@
+2025-08-23 02:55:26,430 - __main__ - INFO - Initializing agent core systems...
+2025-08-23 02:55:26,430 - __main__ - INFO - Agent factory initialized
+2025-08-23 02:55:26,430 - __main__ - INFO - Task runner initialized
+2025-08-23 02:55:26,430 - __main__ - INFO - Memory manager initialized
+2025-08-23 02:55:26,430 - __main__ - INFO - Agent core systems ready
+2025-08-23 02:55:26,430 - __main__ - INFO - Running system tests...
+2025-08-23 02:55:26,432 - agent_core.agent_factory - WARNING - Agent type 'test' not registered. Creating basic agent.
+2025-08-23 02:55:33,240 - __main__ - INFO - Initializing agent core systems...
+2025-08-23 02:55:33,241 - __main__ - INFO - Agent factory initialized
+2025-08-23 02:55:33,241 - __main__ - INFO - Task runner initialized
+2025-08-23 02:55:33,241 - __main__ - INFO - Memory manager initialized
+2025-08-23 02:55:33,241 - __main__ - INFO - Agent core systems ready
+2025-08-23 02:55:33,241 - __main__ - INFO - Starting development server on 0.0.0.0:8001

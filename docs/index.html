@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rippley Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌊 Rippley Documentation</h1>
+        
+        <div class="section">
+            <h2>Overview</h2>
+            <p>Rippley is a modern Neo-Glyph agent system built with FastAPI and advanced agent orchestration capabilities. 
+            It provides a clean, modular architecture for creating and managing intelligent agents.</p>
+        </div>
+
+        <div class="section">
+            <h2>Architecture</h2>
+            <p>The system is organized into the following core modules:</p>
+            <ul>
+                <li><strong>rippley_viewer/</strong> - FastAPI web interface and templating</li>
+                <li><strong>agent_core/</strong> - Core agent functionality and management</li>
+                <li><strong>config/</strong> - Configuration files for glyph specifications and NL rules</li>
+                <li><strong>docs/</strong> - Documentation and guides</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Quick Start</h2>
+            <div class="highlight">
+                <strong>Prerequisites:</strong> Python 3.8+, FastAPI, Uvicorn
+            </div>
+            
+            <h3>Installation</h3>
+            <div class="code-block">
+pip install -r requirements.txt
+            </div>
+
+            <h3>Running the Application</h3>
+            <div class="code-block">
+# Option 1: Using the entry point
+python make_rippley.py
+
+# Option 2: Direct uvicorn command
+uvicorn rippley_viewer.app:app --host 0.0.0.0 --port 8000 --reload
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Agent Core Modules</h2>
+            
+            <h3>AgentFactory</h3>
+            <p>Creates and manages different types of Neo-Glyph agents.</p>
+            <div class="code-block">
+from agent_core import AgentFactory
+
+factory = AgentFactory()
+agent = factory.create_agent("neo_glyph", {"id": "my_agent"})
+            </div>
+
+            <h3>TaskRunner</h3>
+            <p>Manages and executes tasks for agents with concurrent processing capabilities.</p>
+            <div class="code-block">
+from agent_core import TaskRunner
+
+runner = TaskRunner(max_concurrent_tasks=5)
+task = runner.add_task("task_1", "process_data", {"data": "example"})
+            </div>
+
+            <h3>MemoryLink</h3>
+            <p>Provides agent memory and context storage with categorization and search capabilities.</p>
+            <div class="code-block">
+from agent_core import MemoryLink
+
+memory = MemoryLink("agent_1")
+memory.store("context", "conversation_data", category="conversation")
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Configuration</h2>
+            
+            <h3>Glyph Specification (config/glyph_spec.json)</h3>
+            <p>Defines agent capabilities, patterns, and integration points for Neo-Glyph behavior.</p>
+            
+            <h3>Natural Language Rules (config/nl_rules.json)</h3>
+            <p>Configures natural language processing, intent recognition, and response generation.</p>
+        </div>
+
+        <div class="section">
+            <h2>API Endpoints</h2>
+            <ul>
+                <li><strong>GET /</strong> - Main application interface</li>
+                <li>Additional endpoints can be added to rippley_viewer/app.py</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Development</h2>
+            <p>The system follows modern Python practices with:</p>
+            <ul>
+                <li>Type hints for better code clarity</li>
+                <li>Async/await support for concurrent operations</li>
+                <li>Modular design for easy extension</li>
+                <li>Comprehensive logging and error handling</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>License</h2>
+            <p>This project is licensed under the terms specified in the LICENSE file.</p>
+        </div>
+    </div>
+</body>
+</html>

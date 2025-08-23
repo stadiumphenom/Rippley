@@ -13,4 +13,4 @@ async def read_root(request: Request):
 
 # For local development (not used by Vercel but handy for testing)
 if __name__ == "__main__":
-    uvicorn.run("ripley_viewer.app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("rippley_viewer.app:app", host="0.0.0.0", port=8000, reload=True)

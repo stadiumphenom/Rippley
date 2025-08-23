@@ -1,0 +1,172 @@
+{
+  "natural_language_rules": {
+    "version": "1.0.0",
+    "description": "Natural language processing rules for Neo-Glyph agents",
+    "processing_rules": {
+      "text_normalization": {
+        "enabled": true,
+        "rules": [
+          {
+            "name": "lowercase_normalization",
+            "pattern": ".*",
+            "transform": "lowercase",
+            "apply_to": ["user_input", "commands"]
+          },
+          {
+            "name": "punctuation_handling",
+            "pattern": "[.!?]+$",
+            "transform": "strip",
+            "apply_to": ["commands"]
+          }
+        ]
+      },
+      "intent_recognition": {
+        "enabled": true,
+        "confidence_threshold": 0.7,
+        "intents": [
+          {
+            "name": "task_request",
+            "patterns": [
+              "please do",
+              "can you",
+              "execute",
+              "run",
+              "perform"
+            ],
+            "required_entities": ["action"]
+          },
+          {
+            "name": "information_query",
+            "patterns": [
+              "what is",
+              "tell me about",
+              "explain",
+              "describe"
+            ],
+            "required_entities": ["topic"]
+          },
+          {
+            "name": "status_check",
+            "patterns": [
+              "status",
+              "how is",
+              "what's the progress",
+              "update me"
+            ],
+            "required_entities": []
+          }
+        ]
+      },
+      "entity_extraction": {
+        "enabled": true,
+        "entities": [
+          {
+            "name": "action",
+            "type": "verb",
+            "patterns": [
+              "create",
+              "delete",
+              "update",
+              "analyze",
+              "process",
+              "generate"
+            ]
+          },
+          {
+            "name": "topic",
+            "type": "noun",
+            "patterns": [
+              "file",
+              "document",
+              "task",
+              "agent",
+              "memory",
+              "workflow"
+            ]
+          },
+          {
+            "name": "modifier",
+            "type": "adjective",
+            "patterns": [
+              "new",
+              "existing",
+              "current",
+              "previous",
+              "next"
+            ]
+          }
+        ]
+      }
+    },
+    "response_generation": {
+      "enabled": true,
+      "templates": {
+        "task_acknowledgment": [
+          "I'll {action} the {topic} for you.",
+          "Starting to {action} {topic}.",
+          "Processing your request to {action} {topic}."
+        ],
+        "information_response": [
+          "Here's information about {topic}:",
+          "Regarding {topic}:",
+          "Let me explain {topic}:"
+        ],
+        "status_response": [
+          "Current status: {status}",
+          "Progress update: {progress}",
+          "Here's where we stand: {summary}"
+        ],
+        "error_response": [
+          "I encountered an issue: {error}",
+          "Sorry, I couldn't complete that: {reason}",
+          "There was a problem: {details}"
+        ]
+      },
+      "tone_settings": {
+        "default": "professional",
+        "available_tones": [
+          "professional",
+          "casual",
+          "technical",
+          "friendly"
+        ]
+      }
+    },
+    "conversation_flow": {
+      "enabled": true,
+      "context_window": 10,
+      "memory_categories": [
+        "user_preferences",
+        "conversation_history",
+        "task_context",
+        "error_history"
+      ],
+      "flow_rules": [
+        {
+          "name": "greeting_response",
+          "trigger": ["hello", "hi", "hey"],
+          "response_type": "greeting",
+          "next_expected": ["task_request", "information_query"]
+        },
+        {
+          "name": "task_continuation",
+          "trigger": "task_completion",
+          "response_type": "completion_report",
+          "next_expected": ["new_task", "clarification", "goodbye"]
+        },
+        {
+          "name": "error_recovery",
+          "trigger": "error_occurred",
+          "response_type": "error_explanation",
+          "next_expected": ["retry_request", "alternative_approach", "help_request"]
+        }
+      ]
+    },
+    "language_settings": {
+      "default_language": "en",
+      "supported_languages": ["en", "es", "fr", "de"],
+      "auto_detection": true,
+      "translation_enabled": false
+    }
+  }
+}
