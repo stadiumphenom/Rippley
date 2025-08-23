@@ -2,9 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RIPLEY</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .panel {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .panel h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            display: none;
+        }
+        .result.success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .result.error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .loading {
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <h1>RIPLEY is online</h1>
+    
+    <!-- Memory Panel -->
+    <div class="panel">
+        <h2>Memory Panel</h2>
+        <p>System memory status: <strong>Operational</strong></p>
+        <p>Current memory usage: <strong>512 MB / 2 GB</strong></p>
+        <p>Memory efficiency: <strong>85%</strong></p>
+    </div>
+    
+    <!-- Simulation Card -->
+    <div class="panel">
+        <h2>Simulation Card</h2>
+        <form id="simulationForm">
+            <div class="form-group">
+                <label for="simulationInput">Input Data:</label>
+                <textarea 
+                    id="simulationInput" 
+                    name="input" 
+                    placeholder="Enter your simulation input data here..."
+                    required
+                ></textarea>
+            </div>
+            <button type="submit" class="btn" id="simulateBtn">Run Simulation</button>
+        </form>
+        
+        <div id="simulationResult" class="result">
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('simulationForm');
+            const submitBtn = document.getElementById('simulateBtn');
+            const resultDiv = document.getElementById('simulationResult');
+            const resultContent = document.getElementById('resultContent');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const input = document.getElementById('simulationInput').value.trim();
+                if (!input) {
+                    showResult('Please enter some input data.', 'error');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Running Simulation...';
+                showResult('Processing your simulation...', 'loading');
+
+                try {
+                    const response = await fetch('/api/simulate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ input: input })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    showResult(`Result: ${data.result}`, 'success');
+
+                } catch (error) {
+                    console.error('Simulation error:', error);
+                    showResult(`Error: ${error.message}`, 'error');
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Run Simulation';
+                }
+            });
+
+            function showResult(message, type) {
+                resultContent.textContent = message;
+                resultDiv.className = `result ${type}`;
+                resultDiv.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>
