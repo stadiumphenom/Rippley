@@ -98,9 +98,15 @@ class TaskRunner:
                 handler = self.task_handlers[task.task_type]
                 task.result = await self._call_handler(handler, task.payload)
             else:
-                # TODO: Implement default task execution
+                # TODO: Implement Neo-Glyph specific task execution
+                # TODO: Integrate with glyph patterns from config/glyph_spec.json
+                # INCOMPLETE: Default task execution needs Neo-Glyph workflow integration
                 logger.warning(f"No handler found for task type: {task.task_type}")
-                task.result = {"message": f"No handler for {task.task_type}", "payload": task.payload}
+                task.result = {
+                    "message": f"No handler for {task.task_type}", 
+                    "payload": task.payload,
+                    "requires_neo_glyph_integration": True  # TODO: Implement proper Neo-Glyph handling
+                }
             
             task.status = TaskStatus.COMPLETED
             task.completed_at = datetime.now()

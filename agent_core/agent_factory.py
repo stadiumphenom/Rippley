@@ -69,13 +69,18 @@ class AgentFactory:
     
     def _create_basic_agent(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create a basic agent when no specific type is registered."""
-        # TODO: Implement basic agent functionality
-        # This is a placeholder for basic agent creation
+        # TODO: Implement Neo-Glyph specific agent functionality
+        # TODO: Integrate with configuration from config/glyph_spec.json
+        # TODO: Add support for workflow orchestration and multi-modal processing
+        # INCOMPLETE: This is a placeholder implementation
         return {
             "id": config.get('id', 'basic_agent'),
             "type": "basic",
             "config": config,
-            "status": "initialized"
+            "status": "initialized",
+            "capabilities": ["basic_response"],  # TODO: Add Neo-Glyph capabilities
+            "memory_link": None,  # TODO: Initialize MemoryLink integration
+            "task_runner": None   # TODO: Initialize TaskRunner integration
         }
 
 
